@@ -101,15 +101,15 @@ public class ExceptionFactory {
             @NonNull String className,
             @NonNull String code,
             @NonNull String detailedCode,
-            @NonNull Exception e
+            @NonNull Exception originalException
     ) {
         registerAwesomeException(
                 className,
                 new AwesomeNotificationsException(
                         code,
-                        String.format("%s", e.getLocalizedMessage()),
+                        String.format("%s", originalException.getLocalizedMessage()),
                         detailedCode,
-                        e));
+                        originalException));
     }
 
     /// **************  FACTORY METHODS  *********************

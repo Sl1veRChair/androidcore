@@ -56,6 +56,10 @@ public class AwesomeExceptionReceiver {
     }
     public void notifyNewException(String className, Exception exception) {
         Logger.e(className, exception.getLocalizedMessage());
+        if(exceptionListeners.isEmpty()){
+            exception.printStackTrace();
+            return;
+        }
         for (AwesomeExceptionListener listener : exceptionListeners)
             listener.onNewAwesomeException(exception);
     }
