@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
-import android.support.v4.media.session.MediaSessionCompat;
+//import android.support.v4.media.session.MediaSessionCompat;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -104,11 +104,11 @@ public class AwesomeNotifications
 
         NotificationBuilder
             .getNewBuilder()
-            .updateMainTargetClassName(applicationContext)
-            .setMediaSession(
-                    new MediaSessionCompat(
-                            applicationContext,
-                            "PUSH_MEDIA"));
+            .updateMainTargetClassName(applicationContext);
+//            .setMediaSession(
+//                    new MediaSessionCompat(
+//                            applicationContext,
+//                            "PUSH_MEDIA"));
 
 
     }
