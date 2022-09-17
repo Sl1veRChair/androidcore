@@ -17,8 +17,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
-//import android.support.v4.media.MediaMetadataCompat;
-//import android.support.v4.media.session.MediaSessionCompat;
+import android.support.v4.media.MediaMetadataCompat;
+import android.support.v4.media.session.MediaSessionCompat;
 import android.text.Spanned;
 
 import androidx.annotation.NonNull;
@@ -77,7 +77,7 @@ public class NotificationBuilder {
     private final BitmapUtils bitmapUtils;
     private final StringUtils stringUtils;
     private final PermissionManager permissionManager;
-//    private static MediaSessionCompat mediaSession;
+    private static MediaSessionCompat mediaSession;
 
     // *************** DEPENDENCY INJECTION CONSTRUCTOR ***************
 
@@ -386,10 +386,10 @@ public class NotificationBuilder {
         return this;
     }
 
-//    public NotificationBuilder setMediaSession(MediaSessionCompat mediaSession) {
-//        NotificationBuilder.mediaSession = mediaSession;
-//        return this;
-//    }
+    public NotificationBuilder setMediaSession(MediaSessionCompat mediaSession) {
+        NotificationBuilder.mediaSession = mediaSession;
+        return this;
+    }
 
     public Intent getLaunchIntent(Context applicationContext){
         String packageName = applicationContext.getPackageName();
@@ -1270,28 +1270,28 @@ public class NotificationBuilder {
          * https://developer.android.com/guide/topics/media/media-controls
          * https://github.com/rafaelsetragni/awesome_notifications/pull/364
          */
-//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R /*Android 11*/){
-//
-//            if(mediaSession == null)
-//                throw ExceptionFactory
-//                        .getInstance()
-//                        .createNewAwesomeException(
-//                                TAG,
-//                                ExceptionCode.CODE_INITIALIZATION_EXCEPTION,
-//                                "There is no valid media session available",
-//                                ExceptionCode.DETAILED_INSUFFICIENT_REQUIREMENTS);
-//
-//            mediaSession.setMetadata(
-//                    new MediaMetadataCompat.Builder()
-//                            .putString(MediaMetadataCompat.METADATA_KEY_TITLE, contentModel.title)
-//                            .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, contentModel.body)
-//                            .build());
-//        }
-//
-//        builder.setStyle(
-//                new androidx.media.app.NotificationCompat.MediaStyle()
-//                        .setShowActionsInCompactView(showInCompactView)
-//                        .setShowCancelButton(true));
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R /*Android 11*/){
+
+            if(mediaSession == null)
+                throw ExceptionFactory
+                        .getInstance()
+                        .createNewAwesomeException(
+                                TAG,
+                                ExceptionCode.CODE_INITIALIZATION_EXCEPTION,
+                                "There is no valid media session available",
+                                ExceptionCode.DETAILED_INSUFFICIENT_REQUIREMENTS);
+
+            mediaSession.setMetadata(
+                    new MediaMetadataCompat.Builder()
+                            .putString(MediaMetadataCompat.METADATA_KEY_TITLE, contentModel.title)
+                            .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, contentModel.body)
+                            .build());
+        }
+
+        builder.setStyle(
+                new androidx.media.app.NotificationCompat.MediaStyle()
+                        .setShowActionsInCompactView(showInCompactView)
+                        .setShowCancelButton(true));
 
         if (!stringUtils.isNullOrEmpty(contentModel.summary))
             builder.setSubText(contentModel.summary);
