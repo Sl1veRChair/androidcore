@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'me.carda.awesome_notifications.core'
-version '0.0.2-alpha.1'
+version '0.0.2-alpha.2'
 
 android {
     signingConfigs {
@@ -84,7 +84,7 @@ afterEvaluate {
 
                 groupId = 'me.carda'
                 artifactId = 'AwnAndroidCore'
-                version = '0.0.2-alpha.1'
+                version = '0.0.2-alpha.2'
             }
         }
     }
