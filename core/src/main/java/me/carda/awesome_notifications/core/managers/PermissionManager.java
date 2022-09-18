@@ -13,10 +13,13 @@ import android.provider.Settings;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -310,6 +313,25 @@ public class PermissionManager {
         if(!permissions.isEmpty()){
 
             if(!areNotificationsGloballyAllowed(context)){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+
+                    String globalNotificationsPermissionCode = getManifestPermissionCode(null);
+                    boolean requestAlreadyDenied =
+                        activity
+                            .shouldShowRequestPermissionRationale(globalNotificationsPermissionCode);
+
+                    if(!requestAlreadyDenied){
+                        shouldShowAndroidRequestDialog(
+                                activity,
+                                context,
+                                channelKey,
+                                permissions,
+                                Collections.singletonList(globalNotificationsPermissionCode),
+                                permissionCompletionHandler);
+                        return;
+                    }
+                }
+
                 shouldShowRationalePage(
                         context,
                         channelKey,
@@ -371,7 +393,6 @@ public class PermissionManager {
             final List<String> manifestPermissions,
             final PermissionCompletionHandler permissionCompletionHandler
     ) throws AwesomeNotificationsException {
-
         activity.requestPermissions(manifestPermissions.toArray(new String[0]), REQUEST_CODE);
         activityQueue.add(new ActivityCompletionHandler() {
             @Override
@@ -457,7 +478,11 @@ public class PermissionManager {
         permissionCompletionHandler.handle(permissionsNeeded);
     }
 
-    private void updateChannelModelThroughPermissions(final Context context, final @NonNull String channelKey, final @NonNull List<String> permissionsNeeded) throws AwesomeNotificationsException {
+    private void updateChannelModelThroughPermissions(
+            final Context context,
+            final @NonNull String channelKey,
+            final @NonNull List<String> permissionsNeeded
+    ) throws AwesomeNotificationsException {
 
         // For Android 8 and above, channels are updated at every load process
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O /*Android 8*/)
@@ -528,7 +553,13 @@ public class PermissionManager {
         }
     }
 
-    private String getManifestPermissionCode(NotificationPermission permission){
+    private String getManifestPermissionCode(@Nullable NotificationPermission permission){
+
+        if (permission == null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU /*Android 10*/)
+                return Manifest.permission.POST_NOTIFICATIONS;
+            return null;
+        }
 
         switch (permission){
 
@@ -554,7 +585,6 @@ public class PermissionManager {
             case CriticalAlert:
             case Provisional:
             case Car:
-
             default:
                 return null;
         }

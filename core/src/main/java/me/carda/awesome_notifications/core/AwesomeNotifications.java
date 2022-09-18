@@ -79,8 +79,6 @@ public class AwesomeNotifications
     private final WeakReference<Context> wContext;
     private final StringUtils stringUtils;
 
-    private WeakReference<Activity> wActivity;
-
     public static Class actionReceiverClass = NotificationActionReceiver.class;
     public static Class dismissReceiverClass = DismissedNotificationReceiver.class;
     public static Class scheduleReceiverClass = ScheduledNotificationReceiver.class;
@@ -846,12 +844,12 @@ public class AwesomeNotifications
     }
 
     public void requestUserPermissions(
+            @NonNull Activity activity,
             @Nullable String channelKey,
             @NonNull List<String> permissions,
             @NonNull PermissionCompletionHandler permissionCompletionHandler)
             throws AwesomeNotificationsException
     {
-        Activity activity = getActivityFromContext(wContext.get());
         PermissionManager
                 .getInstance()
                 .requestUserPermissions(
@@ -860,22 +858,5 @@ public class AwesomeNotifications
                         channelKey,
                         permissions,
                         permissionCompletionHandler);
-    }
-
-    public Activity getActivityFromContext(Context context)
-    {
-        if (context == null)
-        {
-            return null;
-        }
-        else if (context instanceof ContextWrapper)
-        {
-            if (context instanceof Activity)
-                return (Activity) context;
-            else
-                return getActivityFromContext(((ContextWrapper) context).getBaseContext());
-        }
-
-        return null;
     }
 }
