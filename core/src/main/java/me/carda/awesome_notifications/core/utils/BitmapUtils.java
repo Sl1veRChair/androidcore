@@ -26,6 +26,7 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Nullable;
 
+import me.carda.awesome_notifications.core.AwesomeNotifications;
 import me.carda.awesome_notifications.core.exceptions.ExceptionCode;
 import me.carda.awesome_notifications.core.exceptions.ExceptionFactory;
 
@@ -119,10 +120,10 @@ public class BitmapUtils extends MediaUtils {
             // Resources protected from obfuscation
             // https://developer.android.com/studio/build/shrink-code#strict-reference-checks
             String name = String.format("res_%1s", label);
-            resId = context.getResources().getIdentifier(name, type, context.getPackageName());
+            resId = context.getResources().getIdentifier(name, type, AwesomeNotifications.getPackageName(context));
 
             if(resId == 0){
-                resId = context.getResources().getIdentifier(label, type, context.getPackageName());
+                resId = context.getResources().getIdentifier(label, type, AwesomeNotifications.getPackageName(context));
             }
 
             return resId;
@@ -201,7 +202,10 @@ public class BitmapUtils extends MediaUtils {
 
         try {
             URLConnection conn = new URL(bitmapUri).openConnection();
+            conn.setConnectTimeout(5000);
+            conn.setReadTimeout(5000);
             conn.connect();
+
             inputStream = conn.getInputStream();
             bufferedInputStream = new BufferedInputStream(inputStream, 8192);
             bitmap = BitmapFactory.decodeStream(bufferedInputStream);

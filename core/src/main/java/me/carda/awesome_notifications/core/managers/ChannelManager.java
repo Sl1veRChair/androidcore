@@ -300,7 +300,7 @@ public class ChannelManager {
         } else {
             int soundResourceId = audioUtils.getAudioResourceId(context, soundSource);
             if(soundResourceId > 0){
-                uri = Uri.parse("android.resource://" + context.getPackageName() + "/" + soundResourceId);
+                uri = Uri.parse("android.resource://" + AwesomeNotifications.getPackageName(context) + "/" + soundResourceId);
             }
         }
         return uri;

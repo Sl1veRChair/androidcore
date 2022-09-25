@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import me.carda.awesome_notifications.core.AwesomeNotifications;
 import me.carda.awesome_notifications.core.Definitions;
 import me.carda.awesome_notifications.core.exceptions.AwesomeNotificationsException;
 import me.carda.awesome_notifications.core.exceptions.ExceptionCode;
@@ -19,6 +20,7 @@ public class SharedManager<T extends AbstractModel> {
     private String className;
 
     private static String TAG = "SharedManager";
+    private static String packageName;
 
     private String reference;
     private String hashedReference = "default";
@@ -47,8 +49,11 @@ public class SharedManager<T extends AbstractModel> {
 
     private SharedPreferences getSharedInstance(Context context) throws AwesomeNotificationsException {
 
+        if(packageName == null)
+            packageName = AwesomeNotifications.getPackageName(context);
+
         SharedPreferences preferences = context.getSharedPreferences(
-                context.getPackageName() + "." + hashedReference,
+                hashedReference,
                 Context.MODE_PRIVATE);
 
         if(preferences == null){

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import me.carda.awesome_notifications.core.AwesomeNotifications;
 import me.carda.awesome_notifications.core.Definitions;
 import me.carda.awesome_notifications.core.exceptions.AwesomeNotificationsException;
 import me.carda.awesome_notifications.core.models.NotificationModel;
@@ -201,7 +202,7 @@ public class ScheduleManager {
     private static List<String> _getHelper(Context context, String type, String referenceKey){
 
         SharedPreferences preferences = context.getSharedPreferences(
-                context.getPackageName() + Definitions.SCHEDULER_HELPER_SHARED + type,
+                AwesomeNotifications.getPackageName(context) + Definitions.SCHEDULER_HELPER_SHARED + type,
                 Context.MODE_PRIVATE);
 
         ArrayList<String> ids = new ArrayList<String>();
@@ -213,7 +214,7 @@ public class ScheduleManager {
     private static void _updateHelper(Context context, String type, String referenceKey, List<String> ids){
 
         SharedPreferences preferences = context.getSharedPreferences(
-                context.getPackageName() + Definitions.SCHEDULER_HELPER_SHARED + type,
+                AwesomeNotifications.getPackageName(context) + Definitions.SCHEDULER_HELPER_SHARED + type,
                 Context.MODE_PRIVATE);
 
         SharedPreferences.Editor editor = preferences.edit();
@@ -224,7 +225,7 @@ public class ScheduleManager {
     private static void _removeHelper(Context context, String type, String referenceKey){
 
         SharedPreferences preferences = context.getSharedPreferences(
-                context.getPackageName() + Definitions.SCHEDULER_HELPER_SHARED + type,
+                AwesomeNotifications.getPackageName(context) + Definitions.SCHEDULER_HELPER_SHARED + type,
                 Context.MODE_PRIVATE);
 
         SharedPreferences.Editor editor = preferences.edit();
@@ -234,7 +235,7 @@ public class ScheduleManager {
 
     private static void _removeAllHelpers(Context context, String type){
         SharedPreferences preferences = context.getSharedPreferences(
-                context.getPackageName() + Definitions.SCHEDULER_HELPER_SHARED + type,
+                AwesomeNotifications.getPackageName(context) + Definitions.SCHEDULER_HELPER_SHARED + type,
                 Context.MODE_PRIVATE);
 
         SharedPreferences.Editor editor = preferences.edit();

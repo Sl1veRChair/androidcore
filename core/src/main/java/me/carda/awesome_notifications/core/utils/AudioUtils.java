@@ -7,6 +7,8 @@ import static me.carda.awesome_notifications.core.Definitions.MEDIA_VALID_RESOUR
 
 import android.content.Context;
 
+import me.carda.awesome_notifications.core.AwesomeNotifications;
+
 public class AudioUtils extends MediaUtils {
 
     // ************** SINGLETON PATTERN ***********************
@@ -37,10 +39,10 @@ public class AudioUtils extends MediaUtils {
             // Resources protected from obfuscation
             // https://developer.android.com/studio/build/shrink-code#strict-reference-checks
             String name = String.format("res_%1s", label);
-            resId = context.getResources().getIdentifier(name, type, context.getPackageName());
+            resId = context.getResources().getIdentifier(name, type, AwesomeNotifications.getPackageName(context));
 
             if(resId == 0){
-                resId = context.getResources().getIdentifier(label, type, context.getPackageName());
+                resId = context.getResources().getIdentifier(label, type, AwesomeNotifications.getPackageName(context));
             }
 
             return resId;

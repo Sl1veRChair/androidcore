@@ -360,7 +360,7 @@ public class NotificationBuilder {
             updateMainTargetClassName(applicationContext);
 
         if(mainTargetClassName == null)
-            mainTargetClassName = applicationContext.getPackageName() + ".MainActivity";
+            mainTargetClassName = AwesomeNotifications.getPackageName(applicationContext) + ".MainActivity";
 
         Class clazz = tryResolveClassName(mainTargetClassName);
         if(clazz != null) return clazz;
@@ -370,7 +370,7 @@ public class NotificationBuilder {
 
     public NotificationBuilder updateMainTargetClassName(Context applicationContext) {
 
-        String packageName = applicationContext.getPackageName();
+        String packageName = AwesomeNotifications.getPackageName(applicationContext);
         Intent intent = new Intent();
         intent.setPackage(packageName);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -392,7 +392,7 @@ public class NotificationBuilder {
     }
 
     public Intent getLaunchIntent(Context applicationContext){
-        String packageName = applicationContext.getPackageName();
+        String packageName = AwesomeNotifications.getPackageName(applicationContext);
         return applicationContext.getPackageManager().getLaunchIntentForPackage(packageName);
     }
 
@@ -953,7 +953,7 @@ public class NotificationBuilder {
                         int defaultResource = context.getResources().getIdentifier(
                                 "ic_launcher",
                                 "mipmap",
-                                context.getPackageName()
+                                AwesomeNotifications.getPackageName(context)
                         );
 
                         if (defaultResource > 0) {

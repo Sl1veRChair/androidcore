@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import me.carda.awesome_notifications.core.AwesomeNotifications;
 import me.carda.awesome_notifications.core.Definitions;
 import me.carda.awesome_notifications.core.enumerators.NotificationLayout;
 import me.carda.awesome_notifications.core.exceptions.AwesomeNotificationsException;
@@ -49,7 +50,7 @@ public class StatusBarManager {
         this.stringUtils = stringUtils;
 
         preferences = context.getSharedPreferences(
-                context.getPackageName() + "." + stringUtils.digestString(TAG),
+                AwesomeNotifications.getPackageName(context) + "." + stringUtils.digestString(TAG),
                 Context.MODE_PRIVATE);
 
         activeNotificationsGroup = loadNotificationIdFromPreferences("group");

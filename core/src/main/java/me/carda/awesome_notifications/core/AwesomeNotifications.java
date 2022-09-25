@@ -84,11 +84,19 @@ public class AwesomeNotifications
     public static Class scheduleReceiverClass = ScheduledNotificationReceiver.class;
     public static Class backgroundServiceClass;
 
+    private static String packageName;
+    public static String getPackageName(@NonNull Context context){
+        if(packageName == null)
+            packageName = context.getPackageName();
+        return packageName;
+    }
+
     // ************************** CONSTRUCTOR ***********************************
 
     public AwesomeNotifications(@NonNull Context applicationContext)
             throws AwesomeNotificationsException {
 
+        AwesomeNotifications.getPackageName(applicationContext);
         debug = isApplicationInDebug(applicationContext);
         wContext = new WeakReference<>(applicationContext);
         stringUtils = StringUtils.getInstance();

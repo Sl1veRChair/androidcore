@@ -639,7 +639,7 @@ public class PermissionManager {
 
         // TODO missing action link to global notifications page
         intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        intent.setData(Uri.parse("package:" + context.getPackageName()));
+        intent.setData(Uri.parse("package:" + AwesomeNotifications.getPackageName(context)));
 
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         return startVerifiedActivity(context, intent);
@@ -651,12 +651,12 @@ public class PermissionManager {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O /*Android 8*/) {
 
             intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
-            intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+            intent.putExtra(Settings.EXTRA_APP_PACKAGE, AwesomeNotifications.getPackageName(context));
 
         } else {
 
             intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
-            intent.putExtra("app_package", context.getPackageName());
+            intent.putExtra("app_package", AwesomeNotifications.getPackageName(context));
             intent.putExtra("app_uid", context.getApplicationInfo().uid);
 
         }
@@ -676,7 +676,7 @@ public class PermissionManager {
                             .getAndroidChannel(context, channelKey);
 
             Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
-                    .putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+                    .putExtra(Settings.EXTRA_APP_PACKAGE, AwesomeNotifications.getPackageName(context));
 
             if(channel != null)
                 intent.putExtra(Settings.EXTRA_CHANNEL_ID, channel.getId());
@@ -697,8 +697,8 @@ public class PermissionManager {
             final Intent intent = new Intent();
 
             intent.setAction(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
-            intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
-            intent.setData(Uri.parse("package:" + context.getPackageName()));
+            intent.putExtra(Settings.EXTRA_APP_PACKAGE, AwesomeNotifications.getPackageName(context));
+            intent.setData(Uri.parse("package:" + AwesomeNotifications.getPackageName(context)));
 
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             if(startVerifiedActivity(context, intent))
