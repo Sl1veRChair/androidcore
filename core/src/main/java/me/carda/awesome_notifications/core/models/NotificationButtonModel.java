@@ -38,7 +38,7 @@ public class NotificationButtonModel extends AbstractModel {
         color             = getValueOrDefault(arguments, Definitions.NOTIFICATION_COLOR, Integer.class, null);
         actionType        = getValueOrDefault(arguments, Definitions.NOTIFICATION_ACTION_TYPE, ActionType.class, ActionType.Default);
         enabled           = getValueOrDefault(arguments, Definitions.NOTIFICATION_ENABLED, Boolean.class, true);
-        requireInputText  = getValueOrDefault(arguments, Definitions.NOTIFICATION_REQUIRE_INPUT_TEXT, Boolean.class, true);
+        requireInputText  = getValueOrDefault(arguments, Definitions.NOTIFICATION_REQUIRE_INPUT_TEXT, Boolean.class, false);
         isDangerousOption = getValueOrDefault(arguments, Definitions.NOTIFICATION_IS_DANGEROUS_OPTION, Boolean.class, false);
         autoDismissible   = getValueOrDefault(arguments, Definitions.NOTIFICATION_AUTO_DISMISSIBLE, Boolean.class, true);
         showInCompactView = getValueOrDefault(arguments, Definitions.NOTIFICATION_SHOW_IN_COMPACT_VIEW, Boolean.class, false);
