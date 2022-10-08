@@ -13,6 +13,8 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.media.MediaMetadata;
+import android.media.session.MediaSession;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +26,7 @@ import android.text.Spanned;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
+import androidx.media.app.NotificationCompat.MediaStyle;
 import androidx.core.app.Person;
 import androidx.core.app.RemoteInput;
 import androidx.core.graphics.drawable.IconCompat;
@@ -352,7 +355,7 @@ public class NotificationBuilder {
             return null;
         }
     }
-    
+
     public Class getMainTargetClass(
             Context applicationContext
     ){
@@ -1289,7 +1292,8 @@ public class NotificationBuilder {
         }
 
         builder.setStyle(
-                new androidx.media.app.NotificationCompat.MediaStyle()
+                new MediaStyle()
+                        .setMediaSession(mediaSession.getSessionToken())
                         .setShowActionsInCompactView(showInCompactView)
                         .setShowCancelButton(true));
 
