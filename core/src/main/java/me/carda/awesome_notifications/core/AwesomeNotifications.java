@@ -587,7 +587,7 @@ public class AwesomeNotifications
         ActionManager.clearAllActions(wContext.get());
     }
 
-    private boolean captureNotificationActionFromActivity(Activity startActivity) throws Exception {
+    public boolean captureNotificationActionFromActivity(Activity startActivity) throws Exception {
         if (startActivity == null)
             return false;
         return captureNotificationActionFromIntent(startActivity.getIntent(), true);
@@ -627,14 +627,6 @@ public class AwesomeNotifications
         ActionManager.commitChanges(context);
 
         return initialActionReceived;
-    }
-
-    public void attachToActivity(Activity activity) throws Exception {
-        captureNotificationActionFromActivity(activity);
-    }
-
-    public void dettachFromActivity(){
-
     }
 
     // *****************************  CHANNEL METHODS  **********************************
