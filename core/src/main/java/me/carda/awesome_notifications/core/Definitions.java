@@ -152,6 +152,7 @@ public interface Definitions {
     String NOTIFICATION_SCHEDULE_ERA = "era";
     String NOTIFICATION_SCHEDULE_TIMEZONE = "timeZone";
     String NOTIFICATION_SCHEDULE_PRECISE_ALARM = "preciseAlarm";
+    String NOTIFICATION_SCHEDULE_DELAY_TOLERANCE = "delayTolerance";
     String NOTIFICATION_SCHEDULE_YEAR = "year";
     String NOTIFICATION_SCHEDULE_MONTH = "month";
     String NOTIFICATION_SCHEDULE_DAY = "day";
