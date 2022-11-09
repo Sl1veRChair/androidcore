@@ -184,6 +184,7 @@ public interface Definitions {
     String NOTIFICATION_TIMESTAMP = "timestamp";
     String NOTIFICATION_SUMMARY = "summary";
     String NOTIFICATION_SHOW_WHEN = "showWhen";
+    String NOTIFICATION_TIMEOUT_AFTER = "timeoutAfter";
     String NOTIFICATION_BUTTON_KEY_PRESSED = "buttonKeyPressed";
     String NOTIFICATION_BUTTON_KEY_INPUT = "buttonKeyInput";
     String NOTIFICATION_JSON = "notificationJson";

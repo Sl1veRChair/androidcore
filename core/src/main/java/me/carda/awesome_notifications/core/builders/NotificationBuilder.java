@@ -591,6 +591,7 @@ public class NotificationBuilder {
         setLockedNotification(notificationModel, channel, builder);
         setImportance(channel, builder);
         setCategory(notificationModel, builder);
+        setTimeoutAfter(notificationModel, builder);
 
         setSound(context, notificationModel, channel, builder);
         setVibrationPattern(channel, builder);
@@ -708,6 +709,12 @@ public class NotificationBuilder {
     private void setOnlyAlertOnce(NotificationModel notificationModel, NotificationChannelModel channel, NotificationCompat.Builder builder) {
         boolean onlyAlertOnceValue = BooleanUtils.getInstance().getValue(notificationModel.content.notificationLayout == NotificationLayout.ProgressBar || channel.onlyAlertOnce);
         builder.setOnlyAlertOnce(onlyAlertOnceValue);
+    }
+
+    private void setTimeoutAfter(NotificationModel notificationModel, NotificationCompat.Builder builder) {
+        if(notificationModel.content.timeoutAfter == null) return;
+        if(notificationModel.content.timeoutAfter < 1) return;
+        builder.setTimeoutAfter(notificationModel.content.timeoutAfter);
     }
 
     private void setRemoteHistory(NotificationModel notificationModel, NotificationCompat.Builder builder) {
