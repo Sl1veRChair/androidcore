@@ -136,7 +136,7 @@ public class NotificationContentModel extends AbstractModel {
         icon                  = getValueOrDefault(arguments, Definitions.NOTIFICATION_ICON, String.class, null);
         largeIcon             = getValueOrDefault(arguments, Definitions.NOTIFICATION_LARGE_ICON, String.class, null);
         bigPicture            = getValueOrDefault(arguments, Definitions.NOTIFICATION_BIG_PICTURE, String.class, null);
-        payload               = getValueOrDefault(arguments, Definitions.NOTIFICATION_PAYLOAD, Map.class, null);
+        payload               = getValueOrDefaultMap(arguments, Definitions.NOTIFICATION_PAYLOAD, null);
         autoDismissible       = getValueOrDefault(arguments, Definitions.NOTIFICATION_AUTO_DISMISSIBLE, Boolean.class, true);
         progress              = getValueOrDefault(arguments, Definitions.NOTIFICATION_PROGRESS, Integer.class, null);
         badge                 = getValueOrDefault(arguments, Definitions.NOTIFICATION_BADGE, Integer.class, null);
@@ -146,7 +146,7 @@ public class NotificationContentModel extends AbstractModel {
         roundedLargeIcon      = getValueOrDefault(arguments, Definitions.NOTIFICATION_ROUNDED_LARGE_ICON, Boolean.class, false);
         roundedBigPicture     = getValueOrDefault(arguments, Definitions.NOTIFICATION_ROUNDED_BIG_PICTURE, Boolean.class, false);
 
-        messages = mapToMessages(getValueOrDefault(arguments, Definitions.NOTIFICATION_MESSAGES, List.class, null));
+        messages = mapToMessages(getValueOrDefaultList(arguments, Definitions.NOTIFICATION_MESSAGES, null));
 
         return this;
     }
