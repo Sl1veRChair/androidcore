@@ -553,7 +553,7 @@ public class StatusBarManager extends NotificationListenerService {
     }
 
     public Collection<Integer> getAllActiveNotificationIdsOnStatusBar() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             List<Integer> activeIds = _getAllActiveIdsWithoutServices();
             if (activeIds != null) return activeIds;
         }
@@ -566,7 +566,7 @@ public class StatusBarManager extends NotificationListenerService {
     }
 
     public boolean isNotificationActiveOnStatusBar(int id) {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return getIsNotificationActiveWithoutServices(id);
         }
 
