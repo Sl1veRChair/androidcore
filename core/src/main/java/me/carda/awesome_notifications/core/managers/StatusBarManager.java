@@ -48,6 +48,16 @@ public class StatusBarManager extends NotificationListenerService {
 
     // ************** SINGLETON PATTERN ***********************
 
+    public StatusBarManager(){
+        this.stringUtils = StringUtils.getInstance();
+        preferences = this.getSharedPreferences(
+                AwesomeNotifications.getPackageName(this) + "." + stringUtils.digestString(TAG),
+                Context.MODE_PRIVATE);
+
+        activeNotificationsGroup = loadNotificationIdFromPreferences("group");
+        activeNotificationsChannel = loadNotificationIdFromPreferences("channel");
+    }
+
     private static StatusBarManager instance;
 
     private StatusBarManager(@NonNull final Context context, @NonNull StringUtils stringUtils){
