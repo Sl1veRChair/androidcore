@@ -1067,7 +1067,9 @@ public class NotificationBuilder {
         } else if (!stringUtils.isNullOrEmpty(channelModel.icon)) {
             builder.setSmallIcon(bitmapUtils.getDrawableResourceId(context, channelModel.icon));
         } else {
-            String defaultIcon = DefaultsManager.getDefaultIcon(context);
+            String defaultIcon = DefaultsManager
+                    .getInstance(context)
+                    .getDefaultIcon(context);
 
             if (stringUtils.isNullOrEmpty(defaultIcon)) {
 

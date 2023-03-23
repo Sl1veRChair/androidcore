@@ -153,10 +153,16 @@ public class NotificationContentModel extends AbstractModel {
 
     // Retro-compatibility with 0.6.X
     public void processRetroCompatibility(Map<String, Object> arguments){
-
         if (arguments.containsKey("autoCancel")) {
-            Logger.i("AwesomeNotifications", "autoCancel is deprecated. Please use autoDismissible instead.");
+            Logger.i("AwesomeNotifications", "autoCancel is now deprecated. Please use autoDismissible instead.");
             autoDismissible   = getValueOrDefault(arguments, "autoCancel", Boolean.class, true);
+        }
+
+        for (Map.Entry<String, Object> entry : arguments.entrySet()){
+            if (entry.getValue().equals("AppKilled")){
+                Logger.i("AwesomeNotifications", "AppKilled is now deprecated. Please use Terminated instead.");
+                arguments.put(entry.getKey(), NotificationLifeCycle.Terminated);
+            }
         }
     }
 
