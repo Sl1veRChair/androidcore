@@ -553,7 +553,7 @@ public class AwesomeNotifications
     ) throws AwesomeNotificationsException {
         ActionReceived initialActionReceived = ActionManager
                 .getInstance()
-                .getInitialActionReceived();
+                .getInitialActionReceived(removeActionEvent);
 
         if (!removeActionEvent) return initialActionReceived;
         if(initialActionReceived == null) return null;

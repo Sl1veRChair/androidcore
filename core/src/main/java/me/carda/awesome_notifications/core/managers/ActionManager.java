@@ -34,6 +34,7 @@ public class ActionManager extends EventManager {
 
     // ************** SINGLETON PATTERN ***********************
 
+    public static boolean removeActionEvent = false;
     private final Map<Integer, ActionReceived> actionCache = new HashMap<>();
     private ActionReceived initialActionReceived;
 
@@ -90,7 +91,10 @@ public class ActionManager extends EventManager {
         return true;
     }
 
-    public ActionReceived getInitialActionReceived(){
+    public ActionReceived getInitialActionReceived(boolean removeActionEvent){
+        if(!ActionManager.removeActionEvent && removeActionEvent) {
+            ActionManager.removeActionEvent = true;
+        }
         return initialActionReceived;
     }
 

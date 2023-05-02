@@ -2,7 +2,9 @@ package me.carda.awesome_notifications.core.managers;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleEventObserver;
 import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.ProcessLifecycleOwner;
 
@@ -14,7 +16,7 @@ import me.carda.awesome_notifications.core.enumerators.NotificationLifeCycle;
 import me.carda.awesome_notifications.core.listeners.AwesomeLifeCycleEventListener;
 import me.carda.awesome_notifications.core.logs.Logger;
 
-public class LifeCycleManager implements LifecycleObserver {
+public class LifeCycleManager implements LifecycleEventObserver {
 
     private static final String TAG = "LifeCycleManager";
 
@@ -56,6 +58,23 @@ public class LifeCycleManager implements LifecycleObserver {
             listener.onNewLifeCycleEvent(lifeCycle);
     }
 
+    @Override
+    public void onStateChanged(
+            @NonNull LifecycleOwner source,
+            @NonNull Lifecycle.Event event
+    ) {
+        switch (event) {
+            case ON_CREATE: onCreated(); break;
+            case ON_START: onStarted(); break;
+            case ON_RESUME: onResumed(); break;
+            case ON_PAUSE: onPaused(); break;
+            case ON_STOP: onStopped(); break;
+            case ON_DESTROY: onDestroyed(); break;
+            case ON_ANY:
+                break;
+        }
+    }
+
     // ********************************************************
 
     boolean hasStarted = false;
@@ -94,7 +113,6 @@ public class LifeCycleManager implements LifecycleObserver {
             Logger.d(TAG, "App is now "+lifeCycle);
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     public void onCreated() {
         updateAppLifeCycle(
                 hasGoneForeground ?
@@ -103,7 +121,6 @@ public class LifeCycleManager implements LifecycleObserver {
     }
 
     boolean wasNotCreated = true;
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
     public void onStarted() {
         updateAppLifeCycle(
                 hasGoneForeground ?
@@ -111,28 +128,23 @@ public class LifeCycleManager implements LifecycleObserver {
                         NotificationLifeCycle.Terminated);
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     public void onResumed() {
         updateAppLifeCycle(
                 NotificationLifeCycle.Foreground);
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     public void onPaused() {
         updateAppLifeCycle(
                 NotificationLifeCycle.Foreground);
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     public void onStopped() {
         updateAppLifeCycle(
                 NotificationLifeCycle.Background);
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     public void onDestroyed() {
         updateAppLifeCycle(
                 NotificationLifeCycle.Terminated);
     }
-
 }
