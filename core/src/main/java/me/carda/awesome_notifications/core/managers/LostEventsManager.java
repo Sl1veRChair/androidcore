@@ -14,6 +14,7 @@ import me.carda.awesome_notifications.core.AwesomeNotifications;
 import me.carda.awesome_notifications.core.broadcasters.senders.BroadcastSender;
 import me.carda.awesome_notifications.core.enumerators.NotificationLifeCycle;
 import me.carda.awesome_notifications.core.exceptions.AwesomeNotificationsException;
+import me.carda.awesome_notifications.core.listeners.AwesomeLifeCycleEventListener;
 import me.carda.awesome_notifications.core.logs.Logger;
 import me.carda.awesome_notifications.core.models.AbstractModel;
 import me.carda.awesome_notifications.core.models.returnedData.ActionReceived;
@@ -264,13 +265,7 @@ public class LostEventsManager {
                 .listActions(context);
 
         if (lostActions == null) return recoveredEvents;
-        for (ActionReceived received : lostActions) {
-            if (
-                ActionManager.removeActionEvent &&
-                received.actionLifeCycle == NotificationLifeCycle.Terminated
-            ){
-                continue;
-            }
+        for (ActionReceived received : lostActions)
             try {
                 recoveredEvents.put(
                         generateKeyDateToEvent(
@@ -292,7 +287,6 @@ public class LostEventsManager {
                     Logger.d(TAG, String.format("%s", e.getMessage()));
                 e.printStackTrace();
             }
-        }
 
         ActionManager
                 .getInstance()

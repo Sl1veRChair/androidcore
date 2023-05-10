@@ -91,6 +91,11 @@ public class AwesomeNotifications
         return packageName;
     }
 
+    private Long createdCallbackHandle;
+    private Long displayedCallbackHandle;
+    private Long actionCallbackHandle;
+    private Long dismissedCallbackHandle;
+
     // ************************** CONSTRUCTOR ***********************************
 
     public AwesomeNotifications(@NonNull Context applicationContext)
@@ -204,6 +209,8 @@ public class AwesomeNotifications
         notifyNotificationEvent(eventName, notificationReceived);
     }
 
+    private NotificationLifeCycle lastLifeCycle;
+
     @Override
     public void onNewLifeCycleEvent(NotificationLifeCycle lifeCycle) {
 
@@ -211,7 +218,6 @@ public class AwesomeNotifications
             return;
 
         switch (lifeCycle){
-
             case Foreground:
                 PermissionManager
                         .getInstance()
@@ -219,17 +225,36 @@ public class AwesomeNotifications
                                 PermissionManager.REQUEST_CODE,
                                 null,
                                 null);
+
+                if (lastLifeCycle != NotificationLifeCycle.Terminated) {
+                    break;
+                }
+                try {
+                    LostEventsManager
+                            .getInstance()
+                            .recoverLostNotificationEvents(
+                                    wContext.get(),
+                                    createdCallbackHandle > 0L,
+                                    displayedCallbackHandle > 0L,
+                                    actionCallbackHandle > 0L,
+                                    dismissedCallbackHandle > 0L
+                            );
+                } catch (AwesomeNotificationsException e) {
+                    ExceptionFactory
+                            .getInstance()
+                            .registerNewAwesomeException(
+                                    TAG,
+                                    ExceptionCode.CODE_BACKGROUND_EXECUTION_EXCEPTION,
+                                    "Was not possible to recover lost notification events",
+                                    ExceptionCode.DETAILED_UNEXPECTED_ERROR + ".onNewLifeCycleEvent");
+                }
                 break;
 
             case Background:
-                break;
-
             case Terminated:
-
-//                NotificationScheduler
-//                        .refreshScheduledNotifications(
-//                                wContext.get());
+                break;
         }
+        lastLifeCycle = lifeCycle;
     }
 
     // ********************************************************
@@ -322,6 +347,11 @@ public class AwesomeNotifications
     ) throws AwesomeNotificationsException {
         Context context = wContext.get();
         DefaultsManager defaultsManager = DefaultsManager.getInstance(wContext.get());
+
+        this.createdCallbackHandle = createdCallbackHandle;
+        this.displayedCallbackHandle = displayedCallbackHandle;
+        this.actionCallbackHandle = actionCallbackHandle;
+        this.dismissedCallbackHandle = dismissedCallbackHandle;
 
         defaultsManager.setCreatedCallbackDispatcher(context, createdCallbackHandle);
         defaultsManager.setDisplayedCallbackDispatcher(context, displayedCallbackHandle);
@@ -553,7 +583,7 @@ public class AwesomeNotifications
     ) throws AwesomeNotificationsException {
         ActionReceived initialActionReceived = ActionManager
                 .getInstance()
-                .getInitialActionReceived(removeActionEvent);
+                .getInitialActionReceived();
 
         if (!removeActionEvent) return initialActionReceived;
         if(initialActionReceived == null) return null;
